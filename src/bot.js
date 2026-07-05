@@ -44,15 +44,11 @@ module.exports = (bot) => {
 
       let response;
 
-      if (cache.has(fileName)) {
-        response = await bot.sendPhoto(chatId, cache.get(fileName));
-      } else {
-        response = await bot.sendPhoto(chatId, imagePath);
-
-        const fileId = response.photo[response.photo.length - 1].file_id;
-
-        cache.set(fileName, fileId);
+      if (!cache.has(fileName)) {
+        throw new Error(`${fileName} uchun file_id topilmadi.`);
       }
+
+      await bot.sendPhoto(chatId, cache.get(fileName));
 
       if (loadingMessage) {
         await bot.deleteMessage(chatId, loadingMessage.message_id);
