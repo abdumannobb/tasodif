@@ -1,3 +1,4 @@
+// bot.js
 const path = require("path");
 
 const { getRandomImage } = require("./random");
